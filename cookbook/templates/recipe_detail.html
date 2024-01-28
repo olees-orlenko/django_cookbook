@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о рецепте</title>
+</head>
+<body>
+    <h1>Рецепт "{{ recipe.name }}"</h1>
+    <p>Продукты:</p>
+    <ul>
+        {% for recipe_product in recipe_products %}
+            <li>{{ recipe_product.products.name }} - {{ recipe_product.weight }} {{ recipe_product.measurement_units }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

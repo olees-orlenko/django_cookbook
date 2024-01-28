@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Изменение рецепта</title>
+</head>
+<body>
+    <h1>Добавьте продукты в рецепт "{{ recipe.name }}"</h1>
+    <form action="/change_product_in_recipe/{{ recipe.id }}/" method="post">
+        {% csrf_token %}
+        <label for="product_name">Название продукта:</label>
+        <input type="text" id="product_name" name="product_name">
+        <label for="weight">Вес продукта:</label>
+        <input type="text" id="weight" name="weight">
+        <input type="submit" value="Add/Update Product">
+    </form>
+</body>
+</html>
