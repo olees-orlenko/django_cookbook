@@ -1,4 +1,5 @@
 from django.core.paginator import Paginator
+from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.cache import cache_page
@@ -51,11 +52,13 @@ def add_product_to_recipe(request, recipe_id):
 
 def cook_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
-    recipe_products = RecipeProducts.objects.filter(recipe=recipe)
+    recipe_products = RecipeProducts.objects.select_related("products").filter(
+        recipe=recipe
+    )
     for recipe_product in recipe_products:
         product = recipe_product.products
-        product.cooking_amount += 1
-        product.save()
+        product.cooking_amount = F("cooking_amount") + 1
+        product.save(update_fields=["cooking_amount"])
     context = {"recipe": recipe, "recipe_products": recipe_products}
     return render(request, "cook_recipe.html", context)
 
